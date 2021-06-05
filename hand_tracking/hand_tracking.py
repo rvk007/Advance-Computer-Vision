@@ -22,6 +22,8 @@ while True:
                 height, width, channel = img.shape
                 x,y,z = int(landmark.x * width), int(landmark.y * height), landmark.z
                 # print(id, x, y)
+                if id==4:
+                    cv2.circle(img, (x,y), 10, (0,255,0), cv2.FILLED)
             mpDraw.draw_landmarks(img, hand_landmarks, mpHands.HAND_CONNECTIONS)  # mpHands.HAND_CONNECTIONS joins the landmark points
 
     current_time = time.time()
