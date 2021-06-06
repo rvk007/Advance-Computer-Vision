@@ -9,8 +9,8 @@ prev_time= 0
 
 while True:
     _, img = video_capture.read()
-    poseEstimator.findHuman(img)
-    img = poseEstimator.findPose(img, draw=False)
+    poseEstimator.findPose(img)
+    img = poseEstimator.findPosition(img, draw=False)
     
     current_time = time.time()
     fps = 1/(current_time-prev_time)

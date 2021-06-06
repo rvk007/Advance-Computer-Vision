@@ -20,7 +20,7 @@ class poseEstimation():
             self.min_tracking_confidence
         )
 
-    def findHuman(self, img, draw=True):
+    def findPose(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.pose.process(imgRGB)
 
@@ -28,28 +28,32 @@ class poseEstimation():
             if draw:
                 self.mpDraw.draw_landmarks(img, self.results.pose_landmarks, self.mpPose.POSE_CONNECTIONS)
 
-    def findPose(self, img, draw=True):
+    def findPosition(self, img, draw=True):
+        landmark_list = []
         if self.results.pose_landmarks:
             for id, landmark in enumerate(self.results.pose_landmarks.landmark):
                 height, width, _ = img.shape
                 x,y = int(landmark.x * width), int(landmark.y * height)
                 # print(id, landmark)
+                landmark_list.append([id, x, y])
                 if draw:
                     # self.mpDraw.draw_landmarks(img, self.results.pose_landmarks, self.mpPose.POSE_CONNECTIONS)
                     if id==0:   # point to nose
                         cv2.circle(img, (x,y), 10, (255,0,0), cv2.FILLED)
-        return img
+        return img, landmark_list
 
 def main():
-    video_capture = cv2.VideoCapture(0)
+    video_capture = cv2.VideoCapture(0) # you can give video here as well cv2.VideoCapture('video.mp4')
     
     poseEstimator = poseEstimation()
     prev_time= 0
 
     while True:
         _, img = video_capture.read()
-        poseEstimator.findHuman(img)
-        img = poseEstimator.findPose(img)
+        poseEstimator.findPose(img)
+        img, landmark_list = poseEstimator.findPosition(img)
+        # if landmark_list:
+        #     print(landmark_list)
         
         current_time = time.time()
         fps = 1/(current_time-prev_time)
