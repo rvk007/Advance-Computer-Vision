@@ -1,4 +1,18 @@
-for id, detection in enumerate(results.detections)
+# Face Detection
+
+To run:
+
+```
+python3 face_detection.py
+```
+
+This image shows the 6 distinct full-body landmarks:
+
+<p style="text-align:center">
+    <img style="width: 400px" src="face_detection_landmarks.jpg" /> 
+</p>
+
+The landmarks are represented like this
 
 ```
 0 label_id: 0
@@ -37,3 +51,5 @@ location_data {
   }
 }
 ```
+
+To read more about this go [here](https://google.github.io/mediapipe/solutions/face_detection).
